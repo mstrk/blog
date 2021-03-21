@@ -11,9 +11,9 @@ ogImage:
   url: '/assets/blog/js-dont-block-the-event-loop/cover.jpg'
 ---
 
-In my very early days of javascript programming I stumble to a curious comment in a issue - "Don't block the event loop".
+In my very early days of javascript programming I stumble to a curious comment in an issue - "Don't block the event loop".
 
-The problem was a processing function blocking an animation and the solution was to defer the execution of said function in a `setTimeout` with zero milliseconds.
+The problem was a processing function blocking an animation and the solution was to defer the execution that function in a `setTimeout` with zero milliseconds.
 
 ~~~js
 setTimeout(() => processFn(), 0)
@@ -27,7 +27,7 @@ The answer to the first question is no, `setTimeout` is not a guaranteed time to
 
 ## Call stack and Web APIs
 
-The call stack is where all our functions will be stacked as the name implies and executed in a orderly fashion of last in, first out. Being the return value of the executed function available in the scope of the caller function.
+The call stack is where all our functions will be stacked as the name implies and executed in orderly fashion of last in, first out. Being the return value of the executed function available in the scope of the caller function.
 
 With that in mind we can assume the following output from a function composition
 
@@ -82,7 +82,7 @@ We finally get to know what exactly is this mysterious event loop.
 
 ## The event loop
 
-We already know that the event loop handles a callback queue by following what `setTimeout` really does with our callback. So by looking to what event loop is doing, we find out that it only has one job. Empty a callback queue back to the call stack, **one by one**, in a orderly fashion of first in, first out. Every time our call stack becomes empty and until the callback queue becomes empty as well.
+We already know that the event loop handles a callback queue by following what `setTimeout` really does with our callback. So by looking to what event loop is doing, we find out that it only has one job. Empty a callback queue back to the call stack, **one by one**, in orderly fashion of first in, first out. Every time our call stack becomes empty and until the callback queue becomes empty as well.
 
 Call stack become empty -> push new callback -> callback executed and the call stack becomes empty again -> push new callback
 

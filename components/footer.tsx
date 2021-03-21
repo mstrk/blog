@@ -1,19 +1,24 @@
 import { Container } from './container'
+import SvgIcon from './SvgIcon'
 
 export const Footer = () => {
   return (
     <footer className="bg-accent-2">
       <Container>
-        <div className="py-28 flex flex-col lg:flex-row items-center">
-          <h3 className="text-accent-7 text-4xl lg:text-5xl font-bold tracking-tighter leading-tight text-center lg:text-left mb-10 lg:mb-0 lg:pr-4 lg:w-1/2">
-            Statically Generated with Next.js.
-          </h3>
-          <div className="flex flex-col lg:flex-row justify-center items-center lg:pl-4 lg:w-1/2">
-            <a
-              href="http://www.freepik.com"
-              className="mx-3 bg-black hover:bg-white hover:text-black border border-black text-white font-bold py-3 px-12 lg:px-8 duration-200 transition-colors mb-6 lg:mb-0"
-            >
-              Blog logo designed by Freepik
+        <div className="py-20 flex flex-col lg:flex-row items-center">
+          <a href="http://www.freepik.com" className="hover:underline text-accent-7 text-3xl lg:text-4xl font-bold tracking-tighter leading-tight text-center mb-10 lg:mb-0 lg:pr-4 lg:w-1/2">
+            Blog logo designed by Freepik.
+          </a>
+          <div className="text-accent-7 text-3xl lg:text-4xl flex flex-row justify-center items-center lg:pl-4 lg:w-1/2">
+            Get in touch:
+            &nbsp;
+            <a href="https://github.com/mstrk" target="_blank" rel='noopener noreferrer' >
+              <SvgIcon name='github' size={30} />
+            </a>
+            &nbsp;
+            &nbsp;
+            <a href="https://twitter.com/mstrk512" target="_blank" rel='noopener noreferrer' >
+              <SvgIcon name='twitter' size={30} />
             </a>
           </div>
         </div>

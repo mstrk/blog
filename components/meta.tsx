@@ -1,5 +1,4 @@
 import Head from 'next/head'
-import { HOME_OG_IMAGE_URL } from '../lib/constants'
 
 export const Meta = () => {
   return (
@@ -18,7 +17,6 @@ export const Meta = () => {
         name="description"
         content='Personal blog'
       />
-      <meta property="og:image" content={HOME_OG_IMAGE_URL} />
       <link href='https://fonts.googleapis.com/css?family=Lato&subset=latin,latin-ext' rel='stylesheet' type='text/css' />
       <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.6.0/styles/vs2015.min.css" />
     </Head>

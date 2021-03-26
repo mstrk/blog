@@ -1,6 +1,6 @@
 ---
 title: "JS: Don't block the event loop"
-excerpt: 'What does it mean when someone say to not block the event loop? In my early days of javascript programming I was posed with this question and it was one of the most significant ones in my learning process.'
+excerpt: 'What does it mean when someone says to not block the event loop? In my early days of JavaScript programming I was posed with this question and it was one of the most significant ones in my learning process.'
 coverImage: '/assets/blog/js-dont-block-the-event-loop/cover.jpg'
 date: '2021-03-21'
 author:
@@ -11,7 +11,7 @@ ogImage:
   url: '/assets/blog/js-dont-block-the-event-loop/cover.jpg'
 ---
 
-In my very early days of JavaScript programming, I stumbled upon a curious comment in an issue - "Don't block the event loop".
+In my early days of JavaScript programming, I stumbled upon a curious comment in an issue - "Don't block the event loop".
 
 The problem was a processing function blocking an animation and the solution was to defer the execution of that function in a `setTimeout` with zero milliseconds.
 

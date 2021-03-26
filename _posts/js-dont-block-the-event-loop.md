@@ -98,6 +98,6 @@ This is what the full flow looks like. Keep in mind that the browser will also h
 
 ## Conclusion
 
-Learning about the event loop was an important topic for me to and a super important topic for beginners to know right from the start. Knowing the order by which your program is executed is crucial for you to reason about it.
+Learning about the event loop was an important topic for me and a super important topic for beginners to know right from the start. Knowing the order by which your program is executed is crucial for you to reason about it.
 
 I've learned how asynchronous code is made possible with a single threaded language and when someone says *"Don't block the event loop"*, I take it as to keep my stack executions as fast as possible and ultimately, if the execution is not relevant for the next paint, maybe consider defer it to a more *relevant time*.

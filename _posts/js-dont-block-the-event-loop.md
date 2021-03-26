@@ -11,25 +11,25 @@ ogImage:
   url: '/assets/blog/js-dont-block-the-event-loop/cover.jpg'
 ---
 
-In my very early days of javascript programming I stumble to a curious comment in an issue - "Don't block the event loop".
+In my very early days of JavaScript programming, I stumbled upon a curious comment in an issue - "Don't block the event loop".
 
-The problem was a processing function blocking an animation and the solution was to defer the execution that function in a `setTimeout` with zero milliseconds.
+The problem was a processing function blocking an animation and the solution was to defer the execution of that function in a `setTimeout` with zero milliseconds.
 
 ~~~js
 setTimeout(() => processFn(), 0)
 ~~~
 
-That solution raised two questions in my head.
-  - 1 - Why call `setTimeout` with zero delay, wouldn't the function execute right after?
-  - 2 - What is the event loop and why does he play a role here?
+That solution raised two questions in my head:
+  - 1 - Why call setTimeout with zero delay? Wouldn't the function execute right after?
+  - 2 - What is the event loop and why does it play a role here?
 
-The answer to the first question is no, `setTimeout` is not a guaranteed time to execution, but rather a minimum time to execution. But first we need to reason about how tree things work together, call stack, Web APIs and the event loop.
+The answer to the first question is no, `setTimeout` is not a guaranteed time to execution but rather a minimum time to execution. But first we need to reason about how three things work together: call stack, Web APIs and the event loop.
 
 ## Call stack and Web APIs
 
-The call stack is where all our functions will be stacked as the name implies and executed in orderly fashion of last in, first out. Being the return value of the executed function available in the scope of the caller function.
+The call stack, as the name implies, is where all our functions will be stacked and executed in an orderly fashion of last in, first out. The return value of the executed function will be available in the scope of the caller function.
 
-With that in mind we can assume the following output from a function composition
+With that in mind, we can assume the following output from a function composition.
 
 ~~~js
 function printHello(name) {
@@ -54,7 +54,7 @@ printHello('Ana')
 // 0
 ~~~
 
-But if we call `hello` in a `setTimeout`, even with `0` delay, the output order changes
+But if we call `hello` in a `setTimeout`, even with `0` delay, the output order changes.
 
 ~~~js
 function printHello(name) {
@@ -76,28 +76,28 @@ printHello('Ana')
 // hello Ana!
 ~~~
 
-The reason is that `setTimeout` is an asynchronous Web API, and asynchronous Web APIs don't return the callback directly back to the call stack. They in turn make use of a callback queue that the event loop handles.
+The reason is that `setTimeout` is an asynchronous Web API, and asynchronous Web APIs don't return the callback directly back to the call stack. In turn, they make use of a callback queue that the event loop handles.
 
 We finally get to know what exactly is this mysterious event loop.
 
 ## The event loop
 
-We already know that the event loop handles a callback queue by following what `setTimeout` really does with our callback. So by looking to what event loop is doing, we find out that it only has one job. Empty a callback queue back to the call stack, **one by one**, in orderly fashion of first in, first out. Every time our call stack becomes empty and until the callback queue becomes empty as well.
+We already know that the event loop handles a callback queue by following what setTimeout really does with our callback. So, by looking at what event loop is doing, we find out that it only has one job. To empty a callback queue back to the call stack, **one by one**, in orderly fashion of first in, first out. Every time our call stack becomes empty and until the callback queue becomes empty as well.
 
 Call stack become empty -> push new callback -> callback executed and the call stack becomes empty again -> push new callback
 
-Yes that simple. Simple but non the less important for asynchronous programming.
+Yes, that simple. Simple but nonetheless important for asynchronous programming.
 
 But what does that have to do with the animation blocking?
 
-The event loop is not the only one constrained by an empty call stack to be able to act. The browser paint also is, so for a paint to happen our call stack must be empty. If we think a bit further, this also makes sense, the painting of a new screen is usually condition by the computed values made in the call stack. Painting when we only have half of our computations done for example, would bring unexpected results.
+The event loop is not the only one constrained by an empty call stack to be able to act. The browser paint also is. So, for a paint to happen, our call stack must be empty. If we think a bit further this also makes sense. The painting of a new screen is usually conditioned by the computed values made in the call stack. Painting when we only have half of our computations done for example, would bring unexpected results.
 
-This is what the full flow looks like, keep in mind that the browser will also have a chance to paint before the event loop pushes a new callback to the call stack.
+This is what the full flow looks like. Keep in mind that the browser will also have a chance to paint before the event loop pushes a new callback to the call stack.
 
 <img src="/assets/blog/js-dont-block-the-event-loop/event-loop.gif" style="width: 100%; height: auto;" />
 
 ## Conclusion
 
-Learning about the event loop was an important topic for me to stumble and a super important topic for beginners to know right from the start. Knowing the order your program is executed is crucial for you to reason about it.
+Learning about the event loop was an important topic for me to and a super important topic for beginners to know right from the start. Knowing the order by which your program is executed is crucial for you to reason about it.
 
-I've learned how asynchronous code is made possible with a single threaded language and when someone says *"Don't block the event loop"*, I take it as to keep my stack executions as fast as possible and ultimately if the execution is not relevant for the next paint maybe consider defer it to a more *relevant time*.
+I've learned how asynchronous code is made possible with a single threaded language and when someone says *"Don't block the event loop"*, I take it as to keep my stack executions as fast as possible and ultimately, if the execution is not relevant for the next paint, maybe consider defer it to a more *relevant time*.
